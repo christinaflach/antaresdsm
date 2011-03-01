@@ -30,6 +30,7 @@ package AntaresDSM;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -38,78 +39,79 @@ import javax.swing.JOptionPane;
  * @author Tom
  */
 public class DSM {
+
+    /**
+     * Vertex number including the header.
+     */
+    private int vertexNumber;
     
-    private int NdeVertices; //Número de vertices contando com o cabeçalho
-    
-    private ArrayList<String> listaVertices = new ArrayList<String>();
+    private List<String> vertexList = new ArrayList<String>();
     
     
-    private int matrizDependencias[][];
-    private int matrizDependenciasCalculada[][];
+    private int dependencyMatrix[][];
+    private int calculatedDependecyMatrix[][];
     
     /** Creates a new instance of DSM */
-    public DSM(ArrayList<String> descricaoArquivo) {
+    public DSM(List<String> fileDescription) {
     int i;
-    int indiceEspaco1, indiceEspaco2;
-    int dependente, fornecedor, valorDependencia;
+    int spaceIndex1, spaceIndex2;
+    int dependent, provider, dependecyValor;
         
         
-        //Carrega lista de elementos
-        for (i = 0; ((i < descricaoArquivo.size()) && (descricaoArquivo.get(i).compareTo("dep") != 0) ); i++) {
-            String elemento;
-            int indexEspaco;
+        //Load element list
+        for (i = 0; ((i < fileDescription.size()) && (fileDescription.get(i).compareTo("dep") != 0) ); i++) {
+            String element;
+            int spaceIndex;
 
-            elemento = descricaoArquivo.get(i);
-            indexEspaco = elemento.indexOf(" ");
-            if(i + 1 ==  Integer.parseInt(elemento.substring(0, indexEspaco)) ){
-                listaVertices.add(elemento.substring(indexEspaco + 1));
+            element = fileDescription.get(i);
+            spaceIndex = element.indexOf(" ");
+            if(i + 1 ==  Integer.parseInt(element.substring(0, spaceIndex)) ){
+                vertexList.add(element.substring(spaceIndex + 1));
             } else {
-                JOptionPane.showMessageDialog(null,"O arquivo de entrada é inválido!","Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Input file is not valid!","Error", JOptionPane.ERROR_MESSAGE);
                 break;
             }
 
         }
 
-        // A primeira linha/coluna servirá de cabeçalho
-        NdeVertices = i + 1;
+        // The first line/column will serve as header
+        vertexNumber = i + 1;
         
-        matrizDependencias = new int[NdeVertices][NdeVertices];
+        dependencyMatrix = new int[vertexNumber][vertexNumber];
         
-        for (int j = 0; j < NdeVertices; j++) {
-            matrizDependencias[0][j] = j;
-            matrizDependencias[j][0] = j;
+        for (int j = 0; j < vertexNumber; j++) {
+            dependencyMatrix[0][j] = j;
+            dependencyMatrix[j][0] = j;
         }
         
         
-        for (int j = 1; j < NdeVertices; j++) {
-            for (int k = 1; k < NdeVertices; k++) {
-                matrizDependencias[j][k] = 0;
+        for (int j = 1; j < vertexNumber; j++) {
+            for (int k = 1; k < vertexNumber; k++) {
+                dependencyMatrix[j][k] = 0;
             }
         }
         
-        //Carrega dependências
-        for (i = i+1; i < descricaoArquivo.size(); i++) {
-        String linhaRestante;    
+        //Load the dependecies
+        for (String description : fileDescription) {
+            String residualLine;
             
-            indiceEspaco1 = descricaoArquivo.get(i).indexOf(' ');
+            spaceIndex1 = description.indexOf(' ');
             
-            linhaRestante = descricaoArquivo.get(i).substring(indiceEspaco1 + 1);
+            residualLine = description.substring(spaceIndex1 + 1);
             
-            indiceEspaco2 = linhaRestante.indexOf(' ');
-            dependente = Integer.parseInt(descricaoArquivo.get(i).substring(0, indiceEspaco1));
+            spaceIndex2 = residualLine.indexOf(' ');
+            dependent = Integer.parseInt(description.substring(0, spaceIndex1));
 
-            //O valor da dependência é opcional, caso não coloque, o padrão é 1
-            if(indiceEspaco2 > 0){
-                fornecedor = Integer.parseInt(linhaRestante.substring(0, indiceEspaco2));
-                valorDependencia = Integer.parseInt(linhaRestante.substring(indiceEspaco2 + 1));
+            //The dependency valor is optional, in the case that it is not set, the default valor will be 1.
+            if(spaceIndex2 > 0){
+                provider = Integer.parseInt(residualLine.substring(0, spaceIndex2));
+                dependecyValor = Integer.parseInt(residualLine.substring(spaceIndex2 + 1));
             }else{
-                fornecedor = Integer.parseInt(linhaRestante);
-                valorDependencia = 1;
+                provider = Integer.parseInt(residualLine);
+                dependecyValor = 1;
             }
-                
-            
-            
-            matrizDependencias[dependente][fornecedor] = valorDependencia;
+                   
+            dependencyMatrix[dependent][provider] = dependecyValor;
         }
     
         
@@ -117,57 +119,57 @@ public class DSM {
     }
     
     /** Creates a new instance of DSM*/
-    public DSM(int nDeVertices, int populacao, boolean dependenciasMultiplas) {
+    public DSM(int vertexAmount, int population, boolean multipleDependencies) {
         Random rand = new Random();
-        double popLimite = 0;
+        double popLimit = 0;
         
         rand.setSeed(System.currentTimeMillis());
         
-        if(nDeVertices == 0){ //randomico
-            this.NdeVertices = rand.nextInt(100) + 1;
+        if(vertexAmount == 0){ //random
+            this.vertexNumber = rand.nextInt(100) + 1;
         }else{
-            this.NdeVertices = nDeVertices;
+            this.vertexNumber = vertexAmount;
         }
         
-        // A primeira linha/coluna servirá de cabeçalho
-        this.NdeVertices = this.NdeVertices + 1;
+        // The first line/column will serve as header
+        this.vertexNumber = this.vertexNumber + 1;
         
-        matrizDependencias = new int[this.NdeVertices][this.NdeVertices];
+        dependencyMatrix = new int[this.vertexNumber][this.vertexNumber];
         
-        for (int j = 0; j < NdeVertices; j++) {
-            matrizDependencias[0][j] = j;
-            matrizDependencias[j][0] = j;
+        for (int j = 0; j < vertexNumber; j++) {
+            dependencyMatrix[0][j] = j;
+            dependencyMatrix[j][0] = j;
             if(j > 0){
-                listaVertices.add(String.valueOf(j));
+                vertexList.add(String.valueOf(j));
             }
         }
 
         
         
-        for (int j = 1; j < NdeVertices; j++) {
-            for (int k = 1; k < NdeVertices; k++) {
-                matrizDependencias[j][k] = 0;
+        for (int j = 1; j < vertexNumber; j++) {
+            for (int k = 1; k < vertexNumber; k++) {
+                dependencyMatrix[j][k] = 0;
             }
         }
         
         
-        if (populacao  != 1) {
-            if(populacao == 0){ //randomico
-                popLimite = rand.nextDouble();
+        if (population  != 1) {
+            if(population == 0){ //random
+                popLimit = rand.nextDouble();
             }else{
-                popLimite = (populacao - 1) * 0.10;
+                popLimit = (population - 1) * 0.10;
             }
            
         }
         
         
-        for (int j = 1; j < NdeVertices; j++) {
-            for (int k = 1; k < NdeVertices; k++) {
-                if(rand.nextDouble() < popLimite){ //Marca dependência
-                    if(dependenciasMultiplas){
-                        matrizDependencias[j][k] = rand.nextInt(100) + 1;
+        for (int j = 1; j < vertexNumber; j++) {
+            for (int k = 1; k < vertexNumber; k++) {
+                if(rand.nextDouble() < popLimit){ // Mark dependency
+                    if(multipleDependencies){
+                        dependencyMatrix[j][k] = rand.nextInt(100) + 1;
                     }else{
-                        matrizDependencias[j][k] = 1;
+                        dependencyMatrix[j][k] = 1;
                     }
                 }
             }
@@ -177,181 +179,180 @@ public class DSM {
     }
     
 
-    public int getNdeVertices() {
-        return NdeVertices;
+    public int getVertexNumber() {
+        return vertexNumber;
     }
 
-    public void setNdeVertices(int NdeVertices) {
-        this.NdeVertices = NdeVertices;
+    public void setVertexNumber(int vertexNumber) {
+        this.vertexNumber = vertexNumber;
     }
 
-    public ArrayList<String> getListaVertices() {
-        return listaVertices;
+    public List<String> getVertexList() {
+        return vertexList;
     }
 
-    public void setListaVertices(ArrayList<String> listaVertices) {
-        this.listaVertices = listaVertices;
+    public void setVertexList(List<String> vertexList) {
+        this.vertexList = vertexList;
     }
 
-    public int[][] getMatrizDependencias() {
-        return matrizDependencias;
+    public int[][] getDependencyMatrix() {
+        return dependencyMatrix;
     }
 
-    public void setMatrizDependencias(int[][] matrizDependencias) {
-        this.matrizDependencias = matrizDependencias;
+    public void setDependencyMatrix(int[][] dependencyMatrix) {
+        this.dependencyMatrix = dependencyMatrix;
     }
     
-    public int[][] getmatrizDependenciasCalculada() {
-        return matrizDependenciasCalculada;
+    public int[][] getCalculatedDependencyMatrix() {
+        return calculatedDependecyMatrix;
     }
 
-    public void setmatrizDependenciasCalculada(int[][] matrizDependenciasCalculada) {
-        this.matrizDependenciasCalculada = matrizDependenciasCalculada;
+    public void setCalculatedDependencyMatrix(int[][] calculatedDependencyMatrix) {
+        this.calculatedDependecyMatrix = calculatedDependencyMatrix;
     }
     
-    public ArrayList<ElementoMatriz> OrdenaLista(ArrayList<ElementoMatriz> listaElementos){
+    public List<MatrixElement> sortList(List<MatrixElement> elementList){
         
-        Collections.sort (listaElementos, new Comparator() {   
+        Collections.sort (elementList, new Comparator() {
+            @Override
             public int compare(Object o1, Object o2) {   
-                ElementoMatriz e1 = (ElementoMatriz)o1;   
-                ElementoMatriz e2 = (ElementoMatriz)o2;   
-                return e1.somaElemento < e2.somaElemento ? -1 : (e1.somaElemento > e2.somaElemento ? +1 : 0);   
+                MatrixElement e1 = (MatrixElement)o1;
+                MatrixElement e2 = (MatrixElement)o2;
+                return e1.sumElement < e2.sumElement ? -1 : (e1.sumElement > e2.sumElement ? +1 : 0);
             }   
         }); 
         
         
-        return listaElementos;
+        return elementList;
     }
     
-    public void atualizaMatriz(){
-        //Popula dependências da matriz calculada
-        for (int i = 1; i < NdeVertices; i++) {
-            for (int j = 1; j < NdeVertices; j++) {
-                matrizDependenciasCalculada[i][j] = 
-                        matrizDependencias[ matrizDependenciasCalculada[i][0] ][ matrizDependenciasCalculada[0][j] ];
+    public void updateMatrix(){
+        //Populate the dependencies of the calculated matrix
+        for (int i = 1; i < vertexNumber; i++) {
+            for (int j = 1; j < vertexNumber; j++) {
+                calculatedDependecyMatrix[i][j] =
+                        dependencyMatrix[ calculatedDependecyMatrix[i][0] ][ calculatedDependecyMatrix[0][j] ];
             }
         }
     }
     
     public void QuickTriangularMatrix(){
-        ArrayList<ElementoMatriz> listaFornecedores = new ArrayList<ElementoMatriz>();
-        ArrayList<ElementoMatriz> listaDependentes = new ArrayList<ElementoMatriz>();
-        ElementoMatriz elemento;
-        int soma, somaInferior, somaSuperior;
+        List<MatrixElement> suplierList = new ArrayList<MatrixElement>();
+        List<MatrixElement> dependentList = new ArrayList<MatrixElement>();
+        MatrixElement element;
+        int sum, inferiorSum, superiorSum;
         
         //----------------------------------------------------------------------
-        // Parte I do algoritmo:
+        // Part 1 of the algorithm:
         //
-        // 1- Monta duas listas em ordem crescente, uma com a soma dos valores dos fornecedores (Colunas)
-        //      e outra com a soma dos valores dos dependendentes (Linhas)
-        // 2- Pega na ordem crescente, um item da lista de fornecedores e coloca no final
-        //      e um item da lista de dependentes e coloca no início
-        // 3- Monta matriz calculada com essa ordem
+        // 1- Build two lists in ascending order, one with the sum of the suplier's valors (Columns)
+        //      and another one with the sum of the dependent's valors (Lines)
+        // 2- Gets an element in the ascending order, from the list of supliers e put it in the end of the matrix
+        //      and gets an element from the list of dependents and puts in the beginning of the matrix.
+        // 3- Build the calculated matrix with this order
         //----------------------------------------------------------------------
 
         
-        //Monta as listas para serem ordenadas
-        //Lista de fornecedores
-        for (int i = 1; i < NdeVertices; i++) {
-            soma = 0;
-            for (int j = 1; j < NdeVertices; j++) {
-                soma = soma + matrizDependencias[j][i];
+        //Build the lists to be ordered
+        //Supliers list
+        for (int i = 1; i < vertexNumber; i++) {
+            sum = 0;
+            for (int j = 1; j < vertexNumber; j++) {
+                sum = sum + dependencyMatrix[j][i];
             }
-            elemento = new ElementoMatriz(i,soma);
-            listaFornecedores.add(elemento);
+            element = new MatrixElement(i,sum);
+            suplierList.add(element);
         }
         
-        //Lista de dependentes
-        for (int i = 1; i < NdeVertices; i++) {
-            soma = 0;
-            for (int j = 1; j < NdeVertices; j++) {
-                soma = soma + matrizDependencias[i][j];
+        //Dependents list
+        for (int i = 1; i < vertexNumber; i++) {
+            sum = 0;
+            for (int j = 1; j < vertexNumber; j++) {
+                sum = sum + dependencyMatrix[i][j];
             }
-            elemento = new ElementoMatriz(i,soma);
-            listaDependentes.add(elemento);
+            element = new MatrixElement(i,sum);
+            dependentList.add(element);
         }
         
-        listaFornecedores = OrdenaLista(listaFornecedores);
-        listaDependentes = OrdenaLista(listaDependentes);
+        suplierList = sortList(suplierList);
+        dependentList = sortList(dependentList);
         
-        matrizDependenciasCalculada = new int[NdeVertices][NdeVertices];
+        calculatedDependecyMatrix = new int[vertexNumber][vertexNumber];
         
-        //Monta nova matriz, pegando na ordem um elemento da lista de fornecedores e colocando no final 
-        //e um da lista de dependentes e colocando no início alternadamente
-        for (int i = 0; listaFornecedores.size() > 0; i++) {
+        //Build the new matrix, getting in the ascending order an element from the supliers list and place it in the end of the matrix
+        //and another one from the dependents list and place it in the beginning of the matrix alternatively
+        for (int i = 0; suplierList.size() > 0; i++) {
             int idAtual;
             
-            idAtual = listaFornecedores.get(0).id;
-            matrizDependenciasCalculada[NdeVertices - 1 - i][0] = idAtual;
-            matrizDependenciasCalculada[0][NdeVertices - 1 - i] = idAtual;
+            idAtual = suplierList.get(0).id;
+            calculatedDependecyMatrix[vertexNumber - 1 - i][0] = idAtual;
+            calculatedDependecyMatrix[0][vertexNumber - 1 - i] = idAtual;
             
-            listaFornecedores.remove(0);
-            //Procura mesmo elemento na outra lista para remover
-            for (int j = 0; j < listaDependentes.size(); j++) {
-                if(listaDependentes.get(j).id == idAtual){
-                    listaDependentes.remove(j);
+            suplierList.remove(0);
+            //Search the same element in the other list in order to remove it
+            for (int j = 0; j < dependentList.size(); j++) {
+                if(dependentList.get(j).id == idAtual){
+                    dependentList.remove(j);
                     break;
                 }
             }
             
             
-            if(listaDependentes.size() > 0 ){
-                idAtual = listaDependentes.get(0).id;
-                matrizDependenciasCalculada[i + 1][0] = idAtual;
-                matrizDependenciasCalculada[0][i + 1] = idAtual;
+            if(dependentList.size() > 0 ){
+                idAtual = dependentList.get(0).id;
+                calculatedDependecyMatrix[i + 1][0] = idAtual;
+                calculatedDependecyMatrix[0][i + 1] = idAtual;
 
-                listaDependentes.remove(0);
-                //Procura mesmo elemento na outra lista para remover
-                for (int j = 0; j < listaFornecedores.size(); j++) {
-                    if(listaFornecedores.get(j).id == idAtual){
-                        listaFornecedores.remove(j);
+                dependentList.remove(0);
+                //Search the same element in the other list in order to remove it
+                for (int j = 0; j < suplierList.size(); j++) {
+                    if(suplierList.get(j).id == idAtual){
+                        suplierList.remove(j);
                         break;
                     }
                 }
             }
         }
         
-        atualizaMatriz();
+        updateMatrix();
         
         
         //----------------------------------------------------------------------
-        // Parte II do algoritmo:
+        // Part II of the algorithm:
         //
-        // 1- Varrendo as colunas de trás para frente e as linhas de baixo 
-        //      para cima, procurar dependências
-        //      - Se achar dependência em (i,j), formar quadrado com (j,i) e somar
-        //          bordas do triangulo inferior e superior e comparar
-        //      - Se a soma do triângulo superior for maior que a soma do triângulo
-        //          inferior, trocar (i,j)
+        // 1- Iterate the columns backwards and the lines upwards searching dependencies
+        //      - If a dependecy is found in (i,j), form a square with (ui,j) and sum
+        //          borders of the inferior and superior triangle and compares
+        //      - If the sum of the superior triangle is greater than the sum of the inferior triangle, change (i,j)
         //----------------------------------------------------------------------
         
-        for (int j = NdeVertices - 1; j > 0; j--) {
+        for (int j = vertexNumber - 1; j > 0; j--) {
             for (int i = j - 1; i > 0; i--) {
-                if( matrizDependenciasCalculada[i][j]>0 ){ //Tem dependência
-                    somaInferior = 0;
-                    somaSuperior = 0;
+                if( calculatedDependecyMatrix[i][j]>0 ){ //Has dependency
+                    inferiorSum = 0;
+                    superiorSum = 0;
                     
                     for (int k = i; k <= j; k++) {
-                        somaSuperior = somaSuperior + matrizDependenciasCalculada[i][k];
-                        somaInferior = somaInferior + matrizDependenciasCalculada[k][i];
+                        superiorSum = superiorSum + calculatedDependecyMatrix[i][k];
+                        inferiorSum = inferiorSum + calculatedDependecyMatrix[k][i];
 
                         if(k != j && k != i){
-                            somaSuperior = somaSuperior + matrizDependenciasCalculada[k][j];
-                            somaInferior = somaInferior + matrizDependenciasCalculada[j][k];
+                            superiorSum = superiorSum + calculatedDependecyMatrix[k][j];
+                            inferiorSum = inferiorSum + calculatedDependecyMatrix[j][k];
                         }
                     }
                     
-                    if(somaSuperior > somaInferior){
-                        //Troca
-                        matrizDependenciasCalculada[i][0] = matrizDependenciasCalculada[0][j];
-                        matrizDependenciasCalculada[j][0] = matrizDependenciasCalculada[0][i];
+                    if(superiorSum > inferiorSum){
+                        //Change
+                        calculatedDependecyMatrix[i][0] = calculatedDependecyMatrix[0][j];
+                        calculatedDependecyMatrix[j][0] = calculatedDependecyMatrix[0][i];
                         
-                        matrizDependenciasCalculada[0][i] = matrizDependenciasCalculada[i][0];
-                        matrizDependenciasCalculada[0][j] = matrizDependenciasCalculada[j][0];
+                        calculatedDependecyMatrix[0][i] = calculatedDependecyMatrix[i][0];
+                        calculatedDependecyMatrix[0][j] = calculatedDependecyMatrix[j][0];
                         
-                        atualizaMatriz();
+                        updateMatrix();
                         
-                        j++; // Para analisar o novo elemento que ficou na posição
+                        j++; // In order to analyze the new element that stayed in the position
                         break;
                     }
                 }
@@ -363,17 +364,17 @@ public class DSM {
 
     
     
-    public boolean identificarCiclosElem(int elementoBusca, int elementoAtual, ArrayList<String> elemPassados){
+    public boolean indetifyCycles(int searchElement, int currentElement, List<String> pastElements){
         
-        elemPassados.add(String.valueOf(elementoAtual));
+        pastElements.add(String.valueOf(currentElement));
         
-        for (int i = 1; i < NdeVertices; i++) {
-            if(matrizDependenciasCalculada[elementoAtual][i] > 0){
-                if(elementoBusca == i){
-                    return true; // É ciclo
+        for (int i = 1; i < vertexNumber; i++) {
+            if(calculatedDependecyMatrix[currentElement][i] > 0){
+                if(searchElement == i){
+                    return true; // It is a cycle
                 }else{
-                    if( !elemPassados.contains(String.valueOf(i))){
-                        if( identificarCiclosElem(elementoBusca, i, elemPassados) == true){
+                    if( !pastElements.contains(String.valueOf(i))){
+                        if( indetifyCycles(searchElement, i, pastElements) == true){
                             return true;
                         }
                     }

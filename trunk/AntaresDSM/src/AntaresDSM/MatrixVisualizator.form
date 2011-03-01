@@ -10,8 +10,8 @@
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="DSM inicial"/>
-    <Property name="name" type="java.lang.String" value="matrizPre" noResource="true"/>
+    <Property name="title" type="java.lang.String" value="Initial DSM"/>
+    <Property name="name" type="java.lang.String" value="matrixPre" noResource="true"/>
     <Property name="normalBounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
       <Rectangle value="null"/>
     </Property>
@@ -37,7 +37,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="484" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="488" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">

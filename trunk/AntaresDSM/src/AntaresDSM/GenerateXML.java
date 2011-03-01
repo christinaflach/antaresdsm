@@ -39,64 +39,63 @@ public class GenerateXML {
 
         
 
-        //Aqui definimos o cabecalho do arquivo xml, isso teoricamente nao muda, entao nao se preocupe
-        public static StringBuffer arquivo; 
+        //Here it will be defined the header of the xml file
+        public static StringBuilder file;
         
 
         /**
-         * Método utilizado para gerar os nodos, 
-         * será passado um id, para correlação nas arestas.
-         * Através do id, criaremos uma aresta de um nodo a outro.
+         * Method used in order to generate nodes,
+         * will be passed an id for the edges correlation.
+         * Through the id, it will be created an edge bewtween two nodes.
          * @param id
-         * @param nome
+         * @param name
          * @return
          */
         public static void generateNodes(long userId, String name){
-               arquivo.append("\n\t\t<node id=\"").append(userId).append("\">\n\t\t\t").append(
+               file.append("\n\t\t<node id=\"").append(userId).append("\">\n\t\t\t").append(
                "<data key=\"name\">").append(name).append("</data>\n\t\t</node>");
         }
 
         
         /**
-         * Nessa método serão construídos as arestas correspondes ao id do usuário de origem (idSource)
-         * ao id do usuário de destino (idTarget).
+         * Builds the edges that correspond to the id of the source user (idSource)
+         * to the id of the target user (idTarget).
          * @param idSource
          * @param idTarget
          * @return
          */
         public static void generateEdges(int idSource, int idTarget){
-               arquivo.append("\n\t\t<edge source=\"").append(idSource).append("\" target=\"").append(idTarget).append("\"></edge>\n\t\t\t");
+               file.append("\n\t\t<edge source=\"").append(idSource).append("\" target=\"").append(idTarget).append("\"></edge>\n\t\t\t");
         }
 
         /**
-         * Esse método irá "fechar" o arquivo
+         * Closes the file
          *
          */
-        public static void fechaArquivo(){
-               arquivo.append("\n\n\t</graph>\n</graphml>");
+        public static void closeFile(){
+               file.append("\n\n\t</graph>\n</graphml>");
         }
         
         /**
-         * Método utilizado para salvar o arquivo no disco
+         * Saves the file
          * @param path
          */
-        public static void salvarXML(String path)
+        public static void saveXML(String path)
         {
                try {
                        BufferedWriter out = new BufferedWriter(new FileWriter(path));
-                       out.write(arquivo.toString());
+                       out.write(file.toString());
                        out.flush();
                        out.close();
                } catch (IOException e) {
-                       e.printStackTrace();
-                       System.err.println("Erro ao salvar arquivo...Saindo");
+                       System.err.println("Error saving the file... Exiting");
                        System.exit(0);
                }
         }
         
-        public static void inicializarXML(){
-            arquivo = new StringBuffer(
-                       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--  XML do grafo de classes  -->\n<graphml xmlns=\"").
+        public static void initializeXML(){
+            file = new StringBuilder(
+                       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!--  Graph of classes  -->\n<graphml xmlns=\"").
                 append("http://graphml.graphdrawing.org/xmlns\">\n\t<graph edgedefault=\"directed\">\n\n\t\t<!-- data schema -->\n\t\t<key id=\"name\" for=\"node\"").
                 append(" attr.name=\"name\" attr.type=\"string\"/>\n\n\t\t<!-- nodes -->  ");
         }
