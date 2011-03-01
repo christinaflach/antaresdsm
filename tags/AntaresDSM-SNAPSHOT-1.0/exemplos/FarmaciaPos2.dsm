@@ -1,0 +1,36 @@
+1 ItemVenda
+2 Fornecedor
+3 ItemDeSalario
+4 ItemDeLote
+5 Salario
+6 Cargo
+7 Produto
+8 Venda
+9 ItemCompra
+10 Funcionario
+11 Loja
+12 Compra
+13 Farmacia
+14 Lote
+15 Caixa
+dep
+5 3 1
+7 1 1
+7 14 1
+8 1 1
+8 13 1
+9 7 1
+10 5 1
+10 6 1
+11 4 1
+11 10 1
+12 2 1
+12 9 1
+12 10 1
+13 2 1
+13 10 1
+13 11 1
+13 12 1
+14 4 1
+15 8 1
+15 10 1
