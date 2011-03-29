@@ -91,16 +91,17 @@ public class DSM {
             }
         }
         
-        //Load the dependecies
-        for (String description : fileDescription) {
-            String residualLine;
-            
-            spaceIndex1 = description.indexOf(' ');
-            
-            residualLine = description.substring(spaceIndex1 + 1);
-            
+       
+        //Load dependecies
+        for (i = i+1; i < fileDescription.size(); i++) {
+        String residualLine;
+
+            spaceIndex1 = fileDescription.get(i).indexOf(' ');
+
+            residualLine = fileDescription.get(i).substring(spaceIndex1 + 1);
+
             spaceIndex2 = residualLine.indexOf(' ');
-            dependent = Integer.parseInt(description.substring(0, spaceIndex1));
+            dependent = Integer.parseInt(fileDescription.get(i).substring(0, spaceIndex1));
 
             //The dependency valor is optional, in the case that it is not set, the default valor will be 1.
             if(spaceIndex2 > 0){
@@ -110,7 +111,7 @@ public class DSM {
                 provider = Integer.parseInt(residualLine);
                 dependecyValor = 1;
             }
-                   
+
             dependencyMatrix[dependent][provider] = dependecyValor;
         }
     
