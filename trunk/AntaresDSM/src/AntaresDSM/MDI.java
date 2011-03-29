@@ -228,19 +228,19 @@ public class MDI extends javax.swing.JFrame {
             
             
             for (int i = 0; i < menuBar.getMenuCount(); i++) {
-                if(menuBar.getMenu(i).getName().equals("DSMMenu")){
+                if(menuBar.getMenu(i).getName() == null ? "DSMMenu" == null : menuBar.getMenu(i).getName().equals("DSMMenu")){
                     for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                        if(menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
+                        if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitionate" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
                             menuBar.getMenu(i).getItem(j).setEnabled(true);
                         }
-                        if(menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
+                        if(menuBar.getMenu(i).getItem(j).getName() == null ? "cycles" == null : menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
                             menuBar.getMenu(i).getItem(j).setEnabled(true);
                         }
                     }
                 }
-                if(menuBar.getMenu(i).getName().equals("fileMenu")){
+                if(menuBar.getMenu(i).getName() == null ? "fileMenu" == null : menuBar.getMenu(i).getName().equals("fileMenu")){
                     for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                        if(menuBar.getMenu(i).getItem(j).getName().equals("save")){
+                        if(menuBar.getMenu(i).getItem(j).getName() == null ? "save" == null : menuBar.getMenu(i).getItem(j).getName().equals("save")){
                             menuBar.getMenu(i).getItem(j).setEnabled(true);
                         }
                     }
@@ -381,19 +381,19 @@ public class MDI extends javax.swing.JFrame {
         matrixWindowPre.createMatrix();
         
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
-            if(menuBar.getMenu(i).getName().equals("DSMMenu")){
+            if(menuBar.getMenu(i).getName() == null ? "DSMMenu" == null : menuBar.getMenu(i).getName().equals("DSMMenu")){
                 for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                    if(menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
+                    if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitionate" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
                         menuBar.getMenu(i).getItem(j).setEnabled(true);
                     }
-                    if(menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
+                    if(menuBar.getMenu(i).getItem(j).getName() == null ? "cycles" == null : menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
                         menuBar.getMenu(i).getItem(j).setEnabled(false);
                     }
                 }
             }
-            if(menuBar.getMenu(i).getName().equals("fileMenu")){
+            if(menuBar.getMenu(i).getName() == null ? "fileMenu" == null : menuBar.getMenu(i).getName().equals("fileMenu")){
                 for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                    if(menuBar.getMenu(i).getItem(j).getName().equals("save")){
+                    if(menuBar.getMenu(i).getItem(j).getName() == null ? "save" == null : menuBar.getMenu(i).getItem(j).getName().equals("save")){
                         menuBar.getMenu(i).getItem(j).setEnabled(false);
                     }
                 }
