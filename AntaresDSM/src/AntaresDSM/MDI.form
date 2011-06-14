@@ -52,14 +52,14 @@
             <Property name="name" type="java.lang.String" value="DSMMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="PartitionateMenuItem">
+            <MenuItem class="javax.swing.JMenuItem" name="PartitioningMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Partitionate"/>
+                <Property name="text" type="java.lang.String" value="Partitioning"/>
                 <Property name="enabled" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="partitionate" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="partitioning" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PartitionateMenuItemActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PartitioningMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="CyclesItem">
