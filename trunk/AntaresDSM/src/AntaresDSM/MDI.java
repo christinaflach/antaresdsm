@@ -78,7 +78,7 @@ public class MDI extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         DSMMenu = new javax.swing.JMenu();
-        PartitionateMenuItem = new javax.swing.JMenuItem();
+        PartitioningMenuItem = new javax.swing.JMenuItem();
         CyclesItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -128,15 +128,15 @@ public class MDI extends javax.swing.JFrame {
         DSMMenu.setText("DSM");
         DSMMenu.setName("DSMMenu"); // NOI18N
 
-        PartitionateMenuItem.setText("Partitionate");
-        PartitionateMenuItem.setEnabled(false);
-        PartitionateMenuItem.setName("partitionate"); // NOI18N
-        PartitionateMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        PartitioningMenuItem.setText("Partitioning");
+        PartitioningMenuItem.setEnabled(false);
+        PartitioningMenuItem.setName("partitioning"); // NOI18N
+        PartitioningMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PartitionateMenuItemActionPerformed(evt);
+                PartitioningMenuItemActionPerformed(evt);
             }
         });
-        DSMMenu.add(PartitionateMenuItem);
+        DSMMenu.add(PartitioningMenuItem);
 
         CyclesItem.setText("Identify cycles");
         CyclesItem.setEnabled(false);
@@ -217,7 +217,7 @@ public class MDI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CyclesItemActionPerformed
 
-    private void PartitionateMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartitionateMenuItemActionPerformed
+    private void PartitioningMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartitioningMenuItemActionPerformed
     // TODO add manipulation code here:
             matrixWindowPos = new MatrixVisualizator();
             desktopPane.add(matrixWindowPos);
@@ -230,7 +230,7 @@ public class MDI extends javax.swing.JFrame {
             for (int i = 0; i < menuBar.getMenuCount(); i++) {
                 if(menuBar.getMenu(i).getName() == null ? "DSMMenu" == null : menuBar.getMenu(i).getName().equals("DSMMenu")){
                     for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                        if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitionate" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
+                        if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitioning" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitioning")){
                             menuBar.getMenu(i).getItem(j).setEnabled(true);
                         }
                         if(menuBar.getMenu(i).getItem(j).getName() == null ? "cycles" == null : menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
@@ -246,7 +246,7 @@ public class MDI extends javax.swing.JFrame {
                     }
                 }
             }
-    }//GEN-LAST:event_PartitionateMenuItemActionPerformed
+    }//GEN-LAST:event_PartitioningMenuItemActionPerformed
 
     private List<String> buildOutputFile(){
         List<String> stringList= new ArrayList<String>();
@@ -383,7 +383,7 @@ public class MDI extends javax.swing.JFrame {
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
             if(menuBar.getMenu(i).getName() == null ? "DSMMenu" == null : menuBar.getMenu(i).getName().equals("DSMMenu")){
                 for (int j = 0; j < menuBar.getMenu(i).getItemCount(); j++) {
-                    if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitionate" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitionate")){
+                    if(menuBar.getMenu(i).getItem(j).getName() == null ? "partitioning" == null : menuBar.getMenu(i).getItem(j).getName().equals("partitioning")){
                         menuBar.getMenu(i).getItem(j).setEnabled(true);
                     }
                     if(menuBar.getMenu(i).getItem(j).getName() == null ? "cycles" == null : menuBar.getMenu(i).getItem(j).getName().equals("cycles")){
@@ -430,7 +430,7 @@ public class MDI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CyclesItem;
     private javax.swing.JMenu DSMMenu;
-    private javax.swing.JMenuItem PartitionateMenuItem;
+    private javax.swing.JMenuItem PartitioningMenuItem;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem exitMenuItem;
