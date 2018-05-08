@@ -1,9 +1,3 @@
-/*
- * About.java
- *
- * Created on 1 de Junho de 2008, 17:21
- */
-
 package AntaresDSM;
 
 /**

@@ -315,8 +315,7 @@ public class DSM {
             }
         }
         
-        updateMatrix();
-        
+        updateMatrix();  
         
         //----------------------------------------------------------------------
         // Part II of the algorithm:

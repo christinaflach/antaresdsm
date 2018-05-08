@@ -58,10 +58,6 @@ public class ColorRenderer extends DefaultTableCellRenderer {
                     setBackground(new Color(255,0,0));
                 }
             }
-            
-            
             return this;   
-         
 	}  
-
 } 
